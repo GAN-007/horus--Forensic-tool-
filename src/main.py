@@ -41,6 +41,7 @@ import src.modules.loki_discovery as loki_discovery
 import src.modules.loki_encrypt as loki_encrypt
 import src.modules.loki_decrypt as loki_decrypt
 import src.modules.cryptotracer as cryptotracer
+from src.system_one import ForensicSystemOne, format_decision
 # FORENSICS.
 
 def main_script():
@@ -113,6 +114,8 @@ def main_script():
             command(Fore.YELLOW, 
                 "Lokivault | Access the Loki vault over terminal, move & re-arrange, etc.")
             section("FORENSICS") ######################
+            command(Fore.GREEN,
+                "Triage | Classify already-collected investigation evidence with optional System-One.")
             command(Fore.RED, 
                 "Autodd | Create disc images & snapshots for later analysis, or mount one!")
             command(Fore.RED, 
@@ -175,6 +178,13 @@ def main_script():
             if option == "cryptotrace".lower():
                 cryptotracer.cryptotracer()
                 os._exit(0)
+
+            if option == "triage".lower():
+                print(f"{question} Paste or type the already-collected evidence summary:")
+                evidence = input(f"{prompt}")
+                decision = ForensicSystemOne().classify(evidence, source="horus-cli")
+                print(format_decision(decision))
+                return
         except KeyboardInterrupt:
             print(f'\n{Fore.YELLOW}You interrupted the program.{Fore.WHITE}')
             try:
