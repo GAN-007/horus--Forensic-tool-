@@ -49,6 +49,15 @@ class ForensicSystemOneTests(unittest.TestCase):
         self.assertTrue(result["advisory_only"])
         self.assertEqual(result["answers"]["event_type"]["choice"], "authentication")
 
+
+    def test_non_object_provider_payload_fails_open(self):
+        client = ForensicSystemOne(
+            mode="advisory",
+            base_url="http://laya.test:8000",
+            request_fn=lambda *args: ["invalid"],
+        )
+        self.assertIsNone(client.classify("already-collected authentication evidence"))
+
     def test_failure_fails_open(self):
         def fail(*args):
             raise TimeoutError("down")
