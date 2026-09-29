@@ -141,6 +141,8 @@ class ForensicSystemOne:
                 headers,
                 self.timeout_seconds,
             )
+            if not isinstance(body, dict):
+                raise ValueError("System-One response must be a JSON object")
             answers = body.get("answers")
             if not isinstance(answers, dict):
                 raise ValueError("System-One response has no answers object")
