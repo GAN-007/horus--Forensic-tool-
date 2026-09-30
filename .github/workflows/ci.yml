@@ -1,0 +1,26 @@
+name: Horus CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  system-one:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile decision layer and CLI
+        run: python -m py_compile src/system_one.py src/main.py tests/test_system_one.py
+      - name: Run decision-layer tests
+        run: python -m unittest tests.test_system_one -v
+      - name: Verify CLI hook
+        run: grep -q 'option == "triage".lower()' src/main.py

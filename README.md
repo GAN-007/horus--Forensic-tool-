@@ -58,3 +58,21 @@ Contact info:
 - [Mu](https://github.com/IamMU) | Was Previously Jr Dev
 
 *Some code used can be attributed to [Fox](https://github.com/FoxIDK) and [Askerdyne Ltd.](https://askerdyne.com/), specifically the 'Loki' encryption toolset.*
+
+
+## Optional Laya / System-One forensic triage
+
+Horus now includes a `Triage` command for classifying **already-collected**
+investigation evidence. It does not collect evidence, run scans, exploit hosts,
+contain systems, modify files, or replace deterministic IOC/forensic analysis.
+
+```bash
+export HORUS_SYSTEM_ONE_MODE=off
+export HORUS_SYSTEM_ONE_BASE_URL=http://127.0.0.1:8000
+export HORUS_SYSTEM_ONE_API_KEY=
+export HORUS_SYSTEM_ONE_TIMEOUT_SECONDS=1.5
+```
+
+Use `shadow` or `advisory` only after validating the classifier on your own
+investigation data. Provider errors fail open and leave existing Horus workflows
+unchanged. Human authorization remains required for remediation actions.
